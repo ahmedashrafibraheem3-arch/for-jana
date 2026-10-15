@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0d0209">
+<title>For Jana ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+
+<button id="musicBtn" class="music-btn" title="Toggle music">🔇</button>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ============ SCREEN 1: INTRO ============ -->
+<section class="screen active" id="s-intro">
+  <p class="kicker">A small message… for someone so big in my heart</p>
+  <h1 class="name">Jana <span>Hossam</span></h1>
+  <button class="btn" id="openBtn">Open the letter 💌</button>
+</section>
+
+<!-- ============ SCREEN 2: QUESTIONS (NEW) ============ -->
+<section class="screen" id="s-questions">
+  <h2 class="q-title">Before you read… ✨</h2>
+  <p class="q-sub">Answer 5 quick questions, then the letter will open.</p>
+
+  <form id="qForm" class="q-form" autocomplete="off">
+    <div class="q-field">
+      <label>1. Did you like the file?</label>
+      <input type="text" name="q1" required placeholder="Type your answer…">
+    </div>
+
+    <div class="q-field">
+      <label>2. Was the song nice?</label>
+      <input type="text" name="q2" required placeholder="Type your answer…">
+    </div>
+
+    <div class="q-field">
+      <label>3. Rate the file out of 10</label>
+      <input type="text" name="q3" required placeholder="Type a number…">
+    </div>
+
+    <div class="q-field">
+      <label>4. Do you love me?</label>
+      <input type="text" name="q4" required placeholder="Type your answer…">
+    </div>
+
+    <div class="q-field">
+      <label>5. If you knew who I really am, would you love me?</label>
+      <input type="text" name="q5" required placeholder="Type your answer…">
+    </div>
+
+    <button type="submit" class="btn" id="sendBtn">Send my answers 💌</button>
+  </form>
+
+  <!-- overlay الإرسال -->
+  <div class="sending" id="sendingBox">
+    <div class="sending-spinner"></div>
+    <p>Sending…</p>
+  </div>
+</section>
+
+<!-- ============ SCREEN 3: LETTER ============ -->
+<section class="screen" id="s-letter">
+  <div class="paper">
+    <div class="letter" id="letterBox"></div>
+  </div>
+  <button class="btn ghost hidden" id="nextBtn">Continue ➜</button>
+</section>
+
+<!-- ============ SCREEN 4: QUESTION ============ -->
+<section class="screen" id="s-question">
+  <h2 class="q" id="question">Will you keep going with me?</h2>
+  <div class="btns">
+    <button class="btn" id="yesBtn">Yes ❤️</button>
+    <button class="btn no" id="noBtn">No</button>
+  </div>
+</section>
+
+<!-- ============ SCREEN 5: FINALE ============ -->
+<section class="screen" id="s-finale">
+  <h2 class="final-t">I love you, Jana <span>❤️</span></h2>
+  <p class="final-s">And I promise… I'll always be by your side</p>
+  <div class="gallery" id="gallery"></div>
+  <a class="btn wa" id="waBtn"
+     href="https://wa.me/93708719417"
+     target="_blank" rel="noopener">
+    Write me back 💬
+  </a>
+</section>
+
+<!-- ============ Firebase SDK (compat) ============ -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
