@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+
 
 /* =========================================================
    ⚙️  CONFIG
@@ -43,14 +43,15 @@ const CONFIG = {
    استبدل القيم اللي تحت بالقيم بتاعتك.
    ========================================================= */
 const firebaseConfig = {
-  apiKey: "PUT_YOUR_API_KEY_HERE",
-  authDomain: "PUT_YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://PUT_YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId: "PUT_YOUR_PROJECT",
-  storageBucket: "PUT_YOUR_PROJECT.appspot.com",
-  messagingSenderId: "PUT_YOUR_SENDER_ID",
-  appId: "PUT_YOUR_APP_ID"
-};
+  apiKey: "AIzaSyBNX0_X5_dixile93SXk7ZtFvy4VUFfXrg",
+  authDomain: "jana-e245c.firebaseapp.com",
+  databaseURL: "https://jana-e245c-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "jana-e245c",
+  storageBucket: "jana-e245c.firebasestorage.app",
+  messagingSenderId: "255804098690",
+  appId: "1:255804098690:web:9f73a6d80c2885bf314c9b",
+  measurementId: "G-51EZJEV0KN"
+}; 
 
 /* تهيئة Firebase لو الـ config اتملى */
 let db = null;
@@ -70,6 +71,7 @@ const canvas   = document.getElementById('scene');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 const scene  = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -114,7 +116,7 @@ function makePhotoHeart(photoUrl, scale = 0.14){
   geo.center(); geo.scale(scale, scale, scale);
 
   const tex = new THREE.TextureLoader().load(photoUrl);
-  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.encoding = THREE.sRGBEncoding
 
   const mat = new THREE.MeshBasicMaterial({
     map: tex, side: THREE.DoubleSide, toneMapped: false,
@@ -397,11 +399,10 @@ function typeLines(el, lines, onDone){
   })();
 }
 
-/* =========================================================
-   الشاشة 1 → 2 (Intro → Questions)
-   ========================================================= */
+/* Intro → Yes/No */
 document.getElementById('openBtn').addEventListener('click', () => {
-  show('questions');
+  show('question');
+  document.getElementById('question').textContent = CONFIG.question;
 });
 
 /* =========================================================
@@ -447,11 +448,24 @@ qForm.addEventListener('submit', async (e) => {
   // نستنى شويّة عشان تبان "Sending..."
   setTimeout(() => {
     sendingBox.classList.remove('show');
-    // نروح لصفحة الرسالة
-    show('letter');
-    typeLines(document.getElementById('letterBox'), CONFIG.letter, () => {
-      document.getElementById('nextBtn').classList.remove('hidden');
-    });
+
+// نروح للصفحة الأخيرة
+buildGallery();
+show('finale');
+
+shake = 0.55;
+explode(0, 0, 90, 1.4);
+
+let shots = 0;
+const iv = setInterval(() => {
+  explode(
+    (Math.random() - 0.5) * 6,
+    (Math.random() - 0.5) * 4,
+    45, 1.1
+  );
+  shake = 0.35;
+  if (++shots > 6) clearInterval(iv);
+}, 550);
   }, 1400);
 });
 
@@ -459,8 +473,7 @@ qForm.addEventListener('submit', async (e) => {
    الشاشة 3 → 4 (Letter → Question)
    ========================================================= */
 document.getElementById('nextBtn').addEventListener('click', () => {
-  show('question');
-  document.getElementById('question').textContent = CONFIG.question;
+  show('questions');
 });
 
 /* =========================================================
@@ -508,22 +521,10 @@ noBtn.addEventListener('touchstart', e => { e.preventDefault(); escapeNo(); }, {
    Yes → Finale
    ========================================================= */
 yesBtn.addEventListener('click', () => {
-  buildGallery();
-  show('finale');
-
-  shake = 0.55;
-  explode(0, 0, 90, 1.4);
-
-  let shots = 0;
-  const iv = setInterval(() => {
-    explode(
-      (Math.random() - 0.5) * 6,
-      (Math.random() - 0.5) * 4,
-      45, 1.1
-    );
-    shake = 0.35;
-    if (++shots > 6) clearInterval(iv);
-  }, 550);
+  show('letter');
+  typeLines(document.getElementById('letterBox'), CONFIG.letter, () => {
+    document.getElementById('nextBtn').classList.remove('hidden');
+  });
 });
 
 /* =========================================================
